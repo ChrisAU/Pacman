@@ -48,10 +48,6 @@ class GameScene: SKScene {
 		pacmanSprite.strokeColor = UIColor.blackColor()
 		self.addChild(pacmanSprite)
 		updateDirection()
-		
-		// Blocks to stop 'Pacman' changing direction outside of a defined path?
-		//375/25 = 15 width
-		//666/37 = 18 height
     }
 	
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -66,7 +62,7 @@ class GameScene: SKScene {
 				}
 				let degrees = atan2(touchStartPoint.x - touchEndPoint.x,
 					touchStartPoint.y - touchEndPoint.y).toDegrees()
-				var oldDirection = direction
+				let oldDirection = direction
 				switch Int(degrees) {
 				case -135...(-45):	direction = .Right
 				case -45...45:		direction = .Down
@@ -84,8 +80,7 @@ class GameScene: SKScene {
 	}
    
     override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
-		if let nodes = self.children as? [SKShapeNode] {
+        if let nodes = self.children as? [SKShapeNode] {
 			for node in nodes {
 				let p = node.position
 				let s = node.frame.size

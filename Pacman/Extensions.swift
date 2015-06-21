@@ -19,9 +19,9 @@ extension CGFloat {
 
 extension UIBezierPath {
 	func pathByRotating(degrees: CGFloat) -> UIBezierPath {
-		var radians = degrees.toRadians()
-		var bounds = CGPathGetBoundingBox(self.CGPath)
-		var center = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds))
+		let radians = degrees.toRadians()
+		let bounds = CGPathGetBoundingBox(self.CGPath)
+		let center = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds))
 		var transform = CGAffineTransformIdentity
 		transform = CGAffineTransformTranslate(transform, center.x, center.y)
 		transform = CGAffineTransformRotate(transform, radians)
