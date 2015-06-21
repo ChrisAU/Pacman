@@ -15,63 +15,110 @@ class GameScene: SKScene {
 		case Up
 		case Down
 	}
-	lazy var openDirectionPaths = [Direction: UIBezierPath]()
-	lazy var closedDirectionPaths = [Direction: UIBezierPath]()
-	lazy var wasClosedPath = false
-	lazy var needsToUpdateDirection = false
-	lazy var direction = Direction.Right
-	lazy var lastChange: NSTimeInterval = NSDate().timeIntervalSince1970
-	
-	var touchBeganPoint: CGPoint?
-	let pacmanSprite = SKShapeNode(circleOfRadius: 15)
-	
-    override func didMoveToView(view: SKView) {
-		let radius: CGFloat = 15, diameter: CGFloat = 30, center = CGPoint(x:radius, y:radius)
-		func createPaths(startDegrees: CGFloat, endDegrees: CGFloat, inout dictionary dic: [Direction: UIBezierPath]) {
-			var path = UIBezierPath(arcCenter: center, radius: radius, startAngle: startDegrees.toRadians(), endAngle: endDegrees.toRadians(), clockwise: true)
-			path.addLineToPoint(center)
-			path.closePath()
-			dic[.Right] = path
-			for d: Direction in [.Up, .Left, .Down] {
-				path = path.pathByRotating(90)
-				dic[d] = path
+	class Swacman {
+		lazy var openDirectionPaths = [Direction: UIBezierPath]()
+		lazy var closedDirectionPaths = [Direction: UIBezierPath]()
+		lazy var wasClosedPath = false
+		lazy var needsToUpdateDirection = false
+		lazy var direction = Direction.Right
+		lazy var lastChange: NSTimeInterval = NSDate().timeIntervalSince1970
+		let sprite = SKShapeNode(circleOfRadius: 15)
+		init(_ position: CGPoint) {
+			let radius: CGFloat = 15, diameter: CGFloat = 30, center = CGPoint(x:radius, y:radius)
+			func createPaths(startDegrees: CGFloat, endDegrees: CGFloat, inout dictionary dic: [Direction: UIBezierPath]) {
+				var path = UIBezierPath(arcCenter: center, radius: radius, startAngle: startDegrees.toRadians(), endAngle: endDegrees.toRadians(), clockwise: true)
+				path.addLineToPoint(center)
+				path.closePath()
+				dic[.Right] = path
+				for d: Direction in [.Up, .Left, .Down] {
+					path = path.pathByRotating(90)
+					dic[d] = path
+				}
+			}
+			createPaths(35, 315, dictionary: &openDirectionPaths)
+			createPaths(1, 359, dictionary: &closedDirectionPaths)
+			sprite.position = position
+			sprite.fillColor = UIColor.yellowColor()
+			sprite.lineWidth = 2
+			if let path = openDirectionPaths[.Right] {
+				sprite.path = path.CGPath
+			}
+			sprite.strokeColor = UIColor.blackColor()
+			updateDirection()
+		}
+		
+		func animateChomp() {
+			if needsToUpdateDirection || NSDate().timeIntervalSince1970 - lastChange > 0.25 {
+				if let path = wasClosedPath ? openDirectionPaths[direction]?.CGPath : closedDirectionPaths[direction]?.CGPath {
+					sprite.path = path
+				}
+				wasClosedPath = !wasClosedPath
+				lastChange = NSDate().timeIntervalSince1970
 			}
 		}
-		createPaths(35, 315, dictionary: &openDirectionPaths)
-		createPaths(1, 359, dictionary: &closedDirectionPaths)
-		pacmanSprite.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
-		pacmanSprite.fillColor = UIColor.yellowColor()
-		pacmanSprite.lineWidth = 2
-		if let path = openDirectionPaths[.Right] {
-			pacmanSprite.path = path.CGPath
+		
+		func handleSwipe(from touchStartPoint: CGPoint, to touchEndPoint: CGPoint) {
+			if touchStartPoint == touchEndPoint {
+				return
+			}
+			let degrees = atan2(touchStartPoint.x - touchEndPoint.x,
+				touchStartPoint.y - touchEndPoint.y).toDegrees()
+			let oldDirection = direction
+			switch Int(degrees) {
+			case -135...(-45):	direction = .Right
+			case -45...45:		direction = .Down
+			case 45...135:		direction = .Left
+			default:			direction = .Up
+			}
+			if (oldDirection != direction) {
+				needsToUpdateDirection = true
+			}
 		}
-		pacmanSprite.strokeColor = UIColor.blackColor()
-		self.addChild(pacmanSprite)
-		updateDirection()
+		
+		func updateDirection() {
+			if !needsToUpdateDirection {
+				return
+			}
+			sprite.removeActionForKey("Move")
+			func actionForDirection() -> SKAction {
+				let Delta: CGFloat = 25
+				switch (direction) {
+				case .Up:
+					return SKAction.moveByX(0.0, y: Delta, duration: 0.1)
+				case .Down:
+					return SKAction.moveByX(0.0, y: -Delta, duration: 0.1)
+				case .Right:
+					return SKAction.moveByX(Delta, y: 0.0, duration: 0.1)
+				default:
+					return SKAction.moveByX(-Delta, y: 0.0, duration: 0.1)
+				}
+			}
+			let action = SKAction.repeatActionForever(actionForDirection())
+			sprite.runAction(action, withKey: "Move")
+			needsToUpdateDirection = false
+		}
+	}
+	
+	var touchBeganPoint: CGPoint?
+	var swacman: Swacman?
+	
+    override func didMoveToView(view: SKView) {
+		let swac = Swacman(CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)))
+		self.addChild(swac.sprite)
+		swacman = swac
     }
 	
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
 		touchBeganPoint = positionOfTouch(inTouches: touches)
-    }
+	}
 	
 	override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-		if let touchStartPoint = touchBeganPoint,
-			touchEndPoint = positionOfTouch(inTouches: touches) {
-				if touchStartPoint == touchEndPoint {
-					return
-				}
-				let degrees = atan2(touchStartPoint.x - touchEndPoint.x,
-					touchStartPoint.y - touchEndPoint.y).toDegrees()
-				let oldDirection = direction
-				switch Int(degrees) {
-				case -135...(-45):	direction = .Right
-				case -45...45:		direction = .Down
-				case 45...135:		direction = .Left
-				default:			direction = .Up
-				}
-				if (oldDirection != direction) {
-					needsToUpdateDirection = true
-				}
+		if let touchStartPoint = touchBeganPoint, touchEndPoint = positionOfTouch(inTouches: touches), swac = swacman {
+			if touchStartPoint == touchEndPoint {
+				return
+			}
+			swac.handleSwipe(from: touchStartPoint, to: touchEndPoint)
+			touchBeganPoint = nil
 		}
 	}
 	
@@ -80,11 +127,10 @@ class GameScene: SKScene {
 	}
    
     override func update(currentTime: CFTimeInterval) {
-        if let nodes = self.children as? [SKShapeNode] {
+        if let nodes = self.children as? [SKShapeNode], swac = swacman {
 			for node in nodes {
 				let p = node.position
 				let s = node.frame.size
-				//let s = node.size
 				if p.x - s.width > self.size.width {
 					node.position.x = -s.width
 				}
@@ -97,14 +143,10 @@ class GameScene: SKScene {
 				if p.y < -s.height {
 					node.position.y = self.size.height + (s.height / 2)
 				}
-				if needsToUpdateDirection || NSDate().timeIntervalSince1970 - lastChange > 0.25 {
-					if let path = wasClosedPath ? openDirectionPaths[direction]?.CGPath : closedDirectionPaths[direction]?.CGPath {
-						node.path = path
-					}
-					wasClosedPath = !wasClosedPath
-					lastChange = NSDate().timeIntervalSince1970
+				if node == swac.sprite {
+					swac.animateChomp()
+					swac.updateDirection()
 				}
-				updateDirection()
 			}
 		}
     }
@@ -117,28 +159,5 @@ class GameScene: SKScene {
 			return location
 		}
 		return nil
-	}
-	
-	func updateDirection() {
-		if !needsToUpdateDirection {
-			return
-		}
-		pacmanSprite.removeActionForKey("Move")
-		func actionForDirection() -> SKAction {
-			let Delta: CGFloat = 25
-			switch (direction) {
-			case .Up:
-				return SKAction.moveByX(0.0, y: Delta, duration: 0.1)
-			case .Down:
-				return SKAction.moveByX(0.0, y: -Delta, duration: 0.1)
-			case .Right:
-				return SKAction.moveByX(Delta, y: 0.0, duration: 0.1)
-			default:
-				return SKAction.moveByX(-Delta, y: 0.0, duration: 0.1)
-			}
-		}
-		let action = SKAction.repeatActionForever(actionForDirection())
-		pacmanSprite.runAction(action, withKey: "Move")
-		needsToUpdateDirection = false
 	}
 }
