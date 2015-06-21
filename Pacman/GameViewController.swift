@@ -26,7 +26,14 @@ extension SKNode {
 }
 
 class GameViewController: UIViewController {
-
+/*
+	Rotation will screw up direction, lets leave it disabled for now
+	override func viewWillLayoutSubviews() {
+		if let skView = self.view as? SKView {
+			skView.scene?.size = skView.frame.size
+		}
+	}
+*/
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -52,11 +59,7 @@ class GameViewController: UIViewController {
     }
 
     override func supportedInterfaceOrientations() -> Int {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
-        } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
-        }
+        return Int(UIInterfaceOrientationMask.Portrait.rawValue | UIInterfaceOrientationMask.PortraitUpsideDown.rawValue)
     }
 
     override func didReceiveMemoryWarning() {
