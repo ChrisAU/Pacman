@@ -15,27 +15,15 @@ class GameScene: SKScene {
 		case Up
 		case Down
 	}
-	var needsToUpdateDirection = false
-	var direction: Direction = .Right
+	lazy var openDirectionPaths = [Direction: UIBezierPath]()
+	lazy var closedDirectionPaths = [Direction: UIBezierPath]()
+	lazy var wasClosedPath = false
+	lazy var needsToUpdateDirection = false
+	lazy var direction = Direction.Right
+	lazy var lastChange: NSTimeInterval = NSDate().timeIntervalSince1970
+	
 	var touchBeganPoint: CGPoint?
 	let pacmanSprite = SKShapeNode(circleOfRadius: 15)
-	var lastChange: NSTimeInterval = NSDate().timeIntervalSince1970
-	var openDirectionPaths = [Direction: UIBezierPath]()
-	var closedDirectionPaths = [Direction: UIBezierPath]()
-	var wasClosedPath = false
-	
-	//375/25 = 15 width
-	//666/37 = 18 height
-	
-	func rotateBezierPath(path: UIBezierPath, radians: CGFloat) -> UIBezierPath {
-		var bounds = CGPathGetBoundingBox(path.CGPath);
-		var center = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
-		var transform = CGAffineTransformIdentity;
-		transform = CGAffineTransformTranslate(transform, center.x, center.y);
-		transform = CGAffineTransformRotate(transform, radians);
-		transform = CGAffineTransformTranslate(transform, -center.x, -center.y);
-		return UIBezierPath(CGPath:CGPathCreateCopyByTransformingPath(path.CGPath, &transform));
-	}
 	
     override func didMoveToView(view: SKView) {
 		let radius: CGFloat = 15, diameter: CGFloat = 30, center = CGPoint(x:radius, y:radius)
@@ -60,6 +48,10 @@ class GameScene: SKScene {
 		pacmanSprite.strokeColor = UIColor.blackColor()
 		self.addChild(pacmanSprite)
 		updateDirection()
+		
+		// Blocks to stop 'Pacman' changing direction outside of a defined path?
+		//375/25 = 15 width
+		//666/37 = 18 height
     }
 	
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
