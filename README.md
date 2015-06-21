@@ -1,4 +1,2 @@
 # Pacman
-Gesture driven Pacman game, mainly testing a concept.
-
-In response to a StackOverflow question I wanted to create a Pacman-style 'game' that would change the sprites' direction using gestures. The chomping needed to happen in all directions.
+Gesture driven Pacman-like game, mainly testing a concept created in response to a StackOverflow question, there isn't any collision detection, path finding or indeed even paths. It is merely an example of how to make 'Pac-Man' change direction when a swipe occurs. The chomping needed to happen in all directions.
