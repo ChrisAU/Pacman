@@ -76,18 +76,10 @@ class GameScene: SKScene {
 					touchStartPoint.y - touchEndPoint.y).toDegrees()
 				var oldDirection = direction
 				switch Int(degrees) {
-				case -135...(-45):
-					direction = .Right
-					println("R")
-				case -45...45:
-					direction = .Down
-					println("D")
-				case 45...135:
-					direction = .Left
-					println("L")
-				default:
-					direction = .Up
-					println("U")
+				case -135...(-45):	direction = .Right
+				case -45...45:		direction = .Down
+				case 45...135:		direction = .Left
+				default:			direction = .Up
 				}
 				if (oldDirection != direction) {
 					needsToUpdateDirection = true
