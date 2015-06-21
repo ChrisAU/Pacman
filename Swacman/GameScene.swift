@@ -1,6 +1,6 @@
 //
 //  GameScene.swift
-//  Pacman
+//  Swacman
 //
 //  Created by Chris Nevin on 21/06/2015.
 //  Copyright (c) 2015 CJNevin. All rights reserved.

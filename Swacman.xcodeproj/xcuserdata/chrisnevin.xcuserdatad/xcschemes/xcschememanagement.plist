@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pacman.xcscheme</key>
+		<key>Swacman.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,12 +12,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>99817DFF1B371000006F1810</key>
+		<key>99BB4CEC1B375F33004E95E1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>99817E181B371000006F1810</key>
+		<key>99BB4D051B375F33004E95E1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

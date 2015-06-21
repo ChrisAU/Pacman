@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "99817DFF1B371000006F1810"
-               BuildableName = "Pacman.app"
-               BlueprintName = "Pacman"
-               ReferencedContainer = "container:Pacman.xcodeproj">
+               BuildableName = "Swacman.app"
+               BlueprintName = "Swacman"
+               ReferencedContainer = "container:Swacman.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "99817E181B371000006F1810"
-               BuildableName = "PacmanTests.xctest"
-               BlueprintName = "PacmanTests"
-               ReferencedContainer = "container:Pacman.xcodeproj">
+               BuildableName = "SwacmanTests.xctest"
+               BlueprintName = "SwacmanTests"
+               ReferencedContainer = "container:Swacman.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "99817E181B371000006F1810"
-               BuildableName = "PacmanTests.xctest"
-               BlueprintName = "PacmanTests"
-               ReferencedContainer = "container:Pacman.xcodeproj">
+               BuildableName = "SwacmanTests.xctest"
+               BlueprintName = "SwacmanTests"
+               ReferencedContainer = "container:Swacman.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "99817DFF1B371000006F1810"
-            BuildableName = "Pacman.app"
-            BlueprintName = "Pacman"
-            ReferencedContainer = "container:Pacman.xcodeproj">
+            BuildableName = "Swacman.app"
+            BlueprintName = "Swacman"
+            ReferencedContainer = "container:Swacman.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -77,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "99817DFF1B371000006F1810"
-            BuildableName = "Pacman.app"
-            BlueprintName = "Pacman"
-            ReferencedContainer = "container:Pacman.xcodeproj">
+            BuildableName = "Swacman.app"
+            BlueprintName = "Swacman"
+            ReferencedContainer = "container:Swacman.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -96,9 +96,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "99817DFF1B371000006F1810"
-            BuildableName = "Pacman.app"
-            BlueprintName = "Pacman"
-            ReferencedContainer = "container:Pacman.xcodeproj">
+            BuildableName = "Swacman.app"
+            BlueprintName = "Swacman"
+            ReferencedContainer = "container:Swacman.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

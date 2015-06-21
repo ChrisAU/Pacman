@@ -1,6 +1,6 @@
 //
-//  PacmanTests.swift
-//  PacmanTests
+//  SwacmanTests.swift
+//  SwacmanTests
 //
 //  Created by Chris Nevin on 21/06/2015.
 //  Copyright (c) 2015 CJNevin. All rights reserved.
@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 
-class PacmanTests: XCTestCase {
+class SwacmanTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
