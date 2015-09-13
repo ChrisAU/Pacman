@@ -26,6 +26,6 @@ extension UIBezierPath {
 		transform = CGAffineTransformTranslate(transform, center.x, center.y)
 		transform = CGAffineTransformRotate(transform, radians)
 		transform = CGAffineTransformTranslate(transform, -center.x, -center.y)
-		return UIBezierPath(CGPath:CGPathCreateCopyByTransformingPath(self.CGPath, &transform))
+		return UIBezierPath(CGPath:CGPathCreateCopyByTransformingPath(self.CGPath, &transform)!)
 	}
 }

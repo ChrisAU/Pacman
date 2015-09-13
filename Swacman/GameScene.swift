@@ -35,8 +35,8 @@ class GameScene: SKScene {
 					dic[d] = path
 				}
 			}
-			createPaths(35, 315, dictionary: &openDirectionPaths)
-			createPaths(1, 359, dictionary: &closedDirectionPaths)
+			createPaths(35, endDegrees: 315, dictionary: &openDirectionPaths)
+			createPaths(1, endDegrees: 359, dictionary: &closedDirectionPaths)
 			sprite.position = position
 			sprite.fillColor = UIColor.yellowColor()
 			sprite.lineWidth = 2
@@ -108,11 +108,11 @@ class GameScene: SKScene {
 		swacman = swac
     }
 	
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
 		touchBeganPoint = positionOfTouch(inTouches: touches)
 	}
 	
-	override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+	override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
 		if let touchStartPoint = touchBeganPoint, touchEndPoint = positionOfTouch(inTouches: touches), swac = swacman {
 			if touchStartPoint == touchEndPoint {
 				return
@@ -122,7 +122,7 @@ class GameScene: SKScene {
 		}
 	}
 	
-	override func touchesCancelled(touches: Set<NSObject>!, withEvent event: UIEvent!) {
+	override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
 		touchBeganPoint = nil
 	}
    

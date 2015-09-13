@@ -165,6 +165,8 @@
 		99BB4CE51B375F33004E95E1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0710;
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = CJNevin;
 				TargetAttributes = {
@@ -423,6 +425,7 @@
 				99BB4D121B375F33004E95E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		99BB4D131B375F33004E95E1 /* Build configuration list for PBXNativeTarget "SwacmanTests" */ = {
 			isa = XCConfigurationList;
@@ -431,6 +434,7 @@
 				99BB4D151B375F33004E95E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
